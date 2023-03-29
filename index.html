@@ -10,6 +10,7 @@
       integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
       crossorigin="anonymous"
     />
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
     <link rel="stylesheet" href="src/style.css" />
     <title>Second weather app</title>
   </head>
@@ -17,20 +18,23 @@
     <div class="container">
       <div class="weather-app-wrapper">
         <div class="weather-app">
-          <h1>Amsterdam, NL</h1>
-          <h2>☁️ <strong>10</strong><small>°C | °F</small></h2>
-          <h3>Partly clouded</h3>
+          <h1></h1>
+          <h2>
+            <img src="#" alt="weather-icon" id="icon" />
+            <strong id="temp"></strong><small>°C | °F</small>
+          </h2>
+          <h3></h3>
           <div class="row">
             <div class="col-6">
               <ul>
-                <li>Thursday 13/10</li>
-                <li>Last updated: 10:12</li>
+                <li id="date"></li>
+                <li id="time"></li>
               </ul>
             </div>
             <div class="col-6">
               <ul>
-                <li>Humidity: 66%</li>
-                <li>Wind: 8Km/H</li>
+                <li>Humidity: <span id="humidity"></span>%</li>
+                <li>Wind: <span id="wind"></span>Km/H</li>
               </ul>
             </div>
           </div>
