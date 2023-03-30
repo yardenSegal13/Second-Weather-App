@@ -65,3 +65,12 @@ li {
   cursor: default;
   color: #000000;
 }
+
+.weather-forecast {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.max-deg {
+  font-weight: 600;
+}
