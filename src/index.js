@@ -38,7 +38,6 @@ function currentTime(timestamp) {
 }
 
 function displayData(response) {
-  console.log(response);
   document.querySelector(
     "h1"
   ).innerHTML = `${response.data.name}, ${response.data.sys.country}`;
@@ -71,5 +70,32 @@ function searchCity(city) {
 
   axios.get(apiUrl).then(displayData);
 }
+
+function searchInput(event) {
+  event.preventDefault();
+  let city = document.querySelector("#city-input");
+  searchCity(city.value);
+}
+
+function getLocation(position) {
+  let units = "metric";
+  let lat = position.coords.latitude;
+  let lon = position.coords.longitude;
+  let apiKey = `3499ef150985eccadd080ff408a018df`;
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${units}`;
+
+  axios.get(apiUrl).then(displayData);
+}
+
+function getPosition(event) {
+  event.preventDefault();
+  navigator.geolocation.getCurrentPosition(getLocation);
+}
+let searchDisplay = document
+  .querySelector(".search-display")
+  .addEventListener("click", searchInput);
+
+let myLocationButton = document.querySelector(".my-location-button");
+myLocationButton.addEventListener("click", getPosition);
 
 searchCity(`paris`);
