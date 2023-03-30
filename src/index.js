@@ -38,7 +38,6 @@ function currentTime(timestamp) {
 }
 
 function displayData(response) {
-  console.log(response);
   tempC = Math.round(response.data.temperature.current);
   document.querySelector(
     "h1"
@@ -62,6 +61,17 @@ function displayData(response) {
       "src",
       `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
     );
+
+  getForecast(response.data.coordinates);
+}
+
+function getForecast(coordinates) {
+  let lat = coordinates.latitude;
+  let lon = coordinates.longitude;
+  let apiKey = `e8d0t21311e4ab493b99bo9d8480dbcf`;
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lon=${lon}&lat=${lat}&key=${apiKey}`;
+
+  axios.get(apiUrl).then(displayForecast);
 }
 
 function searchCity(city) {
@@ -108,23 +118,38 @@ function toCelsius(event) {
   document.querySelector("#celsius").classList.add("active");
 }
 
-function displayForecast() {
+function formatDay(timestamp) {
+  let now = new Date(timestamp * 1000);
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let day = days[now.getDay()];
+  return day;
+}
+
+function displayForecast(response) {
+  let forecast = response.data.daily;
   let weatherForecast = document.querySelector("#weather-forecast");
   let forecastHTML = `<div class="row">`;
-  let days = ["Sun", "Mon", "Tue"];
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `
+  forecast.forEach(function (forecastDay, index) {
+    if (index) {
+      forecastHTML =
+        forecastHTML +
+        `
         <div class="col-2">
-          <div class="forecast-day">${day}</div>
-          <img src="#" alt="#" />
+          <div class="forecast-day">${formatDay(forecastDay.time)}</div>
+          <img src= "${forecastDay.condition.icon_url}" alt="${
+          forecastDay.condition.icon
+        }" width="42"/>
           <div class="degrees">
-            <span class="max-deg"> 18°</span> <span>0°</span>
+            <span class="max-deg"> ${Math.round(
+              forecastDay.temperature.maximum
+            )}°</span> <span>${Math.round(
+          forecastDay.temperature.minimum
+        )}°</span>
           </div>
         </div>
       
   `;
+    }
   });
   forecastHTML = forecastHTML + `</div>`;
   weatherForecast.innerHTML = forecastHTML;
@@ -145,5 +170,3 @@ fahrenheit.addEventListener("click", toFahrenheit);
 let celsius = document.querySelector("#celsius");
 celsius.addEventListener("click", toCelsius);
 searchCity(`paris`);
-
-displayForecast();
