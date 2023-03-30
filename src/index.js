@@ -38,12 +38,11 @@ function currentTime(timestamp) {
 }
 
 function displayData(response) {
+  tempC = Math.round(response.data.main.temp);
   document.querySelector(
     "h1"
   ).innerHTML = `${response.data.name}, ${response.data.sys.country}`;
-  document.querySelector("#temp").innerHTML = Math.round(
-    response.data.main.temp
-  );
+  document.querySelector("#temp").innerHTML = tempC;
   document.querySelector("h3").innerHTML = response.data.weather[0].description;
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
   document.querySelector("#wind").innerHTML = Math.round(
@@ -91,11 +90,34 @@ function getPosition(event) {
   event.preventDefault();
   navigator.geolocation.getCurrentPosition(getLocation);
 }
+
+function toFahrenheit(event) {
+  event.preventDefault();
+  let tempF = (tempC * 9) / 5 + 32;
+  document.querySelector("#temp").innerHTML = Math.round(tempF);
+  document.querySelector("#fahrenheit").classList.add("active");
+  document.querySelector("#celsius").classList.remove("active");
+}
+
+function toCelsius(event) {
+  event.preventDefault();
+  document.querySelector("#temp").innerHTML = tempC;
+  document.querySelector("#fahrenheit").classList.remove("active");
+  document.querySelector("#celsius").classList.add("active");
+}
+
 let searchDisplay = document
   .querySelector(".search-display")
   .addEventListener("click", searchInput);
 
+let tempC = null;
+
 let myLocationButton = document.querySelector(".my-location-button");
 myLocationButton.addEventListener("click", getPosition);
 
+let fahrenheit = document.querySelector("#fahrenheit");
+fahrenheit.addEventListener("click", toFahrenheit);
+
+let celsius = document.querySelector("#celsius");
+celsius.addEventListener("click", toCelsius);
 searchCity(`paris`);

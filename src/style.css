@@ -56,3 +56,12 @@ li {
 .my-location-button:hover {
   background-color: #0849e0;
 }
+
+.unit {
+  text-decoration: none;
+}
+
+.active {
+  cursor: default;
+  color: #000000;
+}
