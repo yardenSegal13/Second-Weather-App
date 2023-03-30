@@ -106,6 +106,28 @@ function toCelsius(event) {
   document.querySelector("#celsius").classList.add("active");
 }
 
+function displayForecast() {
+  let weatherForecast = document.querySelector("#weather-forecast");
+  let forecastHTML = `<div class="row">`;
+  let days = ["Sun", "Mon", "Tue"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `
+        <div class="col-2">
+          <div class="forecast-day">${day}</div>
+          <img src="#" alt="#" />
+          <div class="degrees">
+            <span class="max-deg"> 18°</span> <span>0°</span>
+          </div>
+        </div>
+      
+  `;
+  });
+  forecastHTML = forecastHTML + `</div>`;
+  weatherForecast.innerHTML = forecastHTML;
+}
+
 let searchDisplay = document
   .querySelector(".search-display")
   .addEventListener("click", searchInput);
@@ -121,3 +143,5 @@ fahrenheit.addEventListener("click", toFahrenheit);
 let celsius = document.querySelector("#celsius");
 celsius.addEventListener("click", toCelsius);
 searchCity(`paris`);
+
+displayForecast();
