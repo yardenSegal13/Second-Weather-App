@@ -61,7 +61,8 @@ function displayData(response) {
       "src",
       `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
     );
-
+  document.querySelector("#fahrenheit").classList.remove("active");
+  document.querySelector("#celsius").classList.add("active");
   getForecast(response.data.coordinates);
 }
 
