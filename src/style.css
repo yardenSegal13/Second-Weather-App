@@ -81,3 +81,10 @@ li {
 .max-deg {
   font-weight: 600;
 }
+
+@media (max-width: 960px) {
+  .serach-engine-buttons {
+    width: 100px;
+    margin-top: 20px;
+  }
+}
